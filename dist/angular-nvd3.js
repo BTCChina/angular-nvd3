@@ -140,8 +140,10 @@
 
                             nv.addGraph(function() {
                                 // Update the chart when window resizes
-                                scope.chart.resizeHandler = nv.utils.windowResize(function() {scope.chart && scope.chart.update(); });
-                                return scope.chart;
+                                if (scope.chart !== null && scope.chart !== undefined) {
+                                    scope.chart.resizeHandler = nv.utils.windowResize(function() {scope.chart.update(); });
+                                    return scope.chart;
+                                }
                             }, options.chart['callback']);
                         },
 
@@ -168,13 +170,13 @@
                             element.find('.subtitle').remove();
                             element.find('.caption').remove();
                             element.empty();
-                            if (scope.chart) {
+                            if (scope.chart !== null && scope.chart !== undefined) {
                                 // clear window resize event handler
                                 if (scope.chart.resizeHandler) scope.chart.resizeHandler.clear();
 
                                 // remove chart from nv.graph list
                                 for (var i = 0; i < nv.graphs.length; i++)
-                                    if (nv.graphs[i].id === scope.chart.id) {
+                                    if (nv.graphs[i] !== null && nv.graphs[i] !==undefined && nv.graphs[i].id === scope.chart.id) {
                                         nv.graphs.splice(i, 1);
                                     }
                             }
